@@ -1,0 +1,46 @@
+apiVersion: apps/v1 # до версии 1.9.0 нужно использовать apps/v1beta2
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  affinity:	# рапределяем поды по зонам
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - zone1
+            - zone2
+	          - zone3
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: "name"
+                operator: In
+                values:
+                - nginx-deployment
+          topologyKey: "kubernetes.io/hostname"	
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # запускает 2 пода, созданных по шаблону
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx	#Берем для теста простейший образ
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+	resources:
+  	  limits:	#Ограничиваем память и CPU
+	    memory: "128Mi"
+    	    cpu: "1"
+  	  requests:
+	    memory: "128Mi"
+	    cpu: 0.1
