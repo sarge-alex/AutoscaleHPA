@@ -13,8 +13,8 @@ spec:
             values:
             - zone1
             - zone2
-	          - zone3
-    podAntiAffinity:
+	    - zone3
+    podAntiAffinity:	# запрет двух подов на один узел
       requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchExpressions:
