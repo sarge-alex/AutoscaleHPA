@@ -11,3 +11,7 @@
 
 Файлы предоставлены не для использования в production кластере, тестирование не проведено.
 Только демонстрация алгоритма решения поставленной задачи.
+
+# examples:
+https://www.kubecost.com/kubernetes-autoscaling/kubernetes-hpa/
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
