@@ -12,6 +12,20 @@
 Файлы предоставлены не для использования в production кластере, тестирование не проведено.
 Только демонстрация алгоритма решения поставленной задачи.
 
-# examples:
+Run this in a separate terminal
+so that the load generation continues and you can carry on with the rest of the steps
+```
+kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://nginx-deployment; done"
+```
+type Ctrl+C to end the watch when you're ready
+```
+kubectl get hpa nginx-deployment --watch
+```
+As a result, the Deployment was resized to 7 replicas:
+```
+kubectl get deployment nginx-deployment
+```
+**examples:**
+
 https://www.kubecost.com/kubernetes-autoscaling/kubernetes-hpa/
 https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/
